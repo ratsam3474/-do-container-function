@@ -1,0 +1,15 @@
+# DigitalOcean Function project configuration
+packages:
+  - name: container-manager
+    functions:
+      - name: main
+        runtime: python:3.11
+        main: main.main
+        environment:
+          # These will be set in DigitalOcean dashboard
+          # WAHA_VM_IP: <set in DO dashboard>
+          # WAHA_SSH_USER: <set in DO dashboard>
+          # WAHA_SSH_PASSWORD: <set in DO dashboard>
+          # USER_VM_IP: <set in DO dashboard>
+          # USER_SSH_USER: <set in DO dashboard>
+          # USER_SSH_PASSWORD: <set in DO dashboard>
