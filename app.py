@@ -3,7 +3,7 @@ Web service wrapper for container management function
 """
 from flask import Flask, request, jsonify
 import os
-from main import main as function_main
+from main_tcp import main as function_main
 
 app = Flask(__name__)
 
