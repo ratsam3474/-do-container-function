@@ -102,12 +102,15 @@ def get_ssh_client(vm_type: str):
         raise Exception(f"{vm_type.upper()}_VM_IP not configured")
     
     # Connect with key or password
-    if ssh_key_path and os.path.exists(ssh_key_path):
-        ssh.connect(host, username=ssh_user, key_filename=ssh_key_path, timeout=10)
-    elif ssh_password:
-        ssh.connect(host, username=ssh_user, password=ssh_password, timeout=10)
-    else:
-        raise Exception(f"No SSH credentials for {vm_type} VM")
+    try:
+        if ssh_key_path and os.path.exists(ssh_key_path):
+            ssh.connect(host, username=ssh_user, key_filename=ssh_key_path, timeout=10)
+        elif ssh_password:
+            ssh.connect(host, username=ssh_user, password=ssh_password, timeout=10, look_for_keys=False, allow_agent=False)
+        else:
+            raise Exception(f"No SSH credentials for {vm_type} VM")
+    except Exception as e:
+        raise Exception(f"SSH connection failed to {vm_type} VM ({host}): {str(e)}")
     
     return ssh
 
