@@ -1,0 +1,31 @@
+name: do-container-function
+region: nyc
+features:
+  - serverless-functions
+
+functions:
+  - name: container-manager
+    source_dir: /
+    github:
+      repo: ratsam3474/-do-container-function
+      branch: main
+      deploy_on_push: true
+    envs:
+      - key: WAHA_VM_IP
+        scope: RUN_TIME
+        type: SECRET
+      - key: WAHA_SSH_USER
+        scope: RUN_TIME
+        value: root
+      - key: WAHA_SSH_PASSWORD
+        scope: RUN_TIME
+        type: SECRET
+      - key: USER_VM_IP
+        scope: RUN_TIME
+        type: SECRET
+      - key: USER_SSH_USER
+        scope: RUN_TIME
+        value: root
+      - key: USER_SSH_PASSWORD
+        scope: RUN_TIME
+        type: SECRET
