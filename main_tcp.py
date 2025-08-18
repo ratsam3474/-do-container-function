@@ -95,7 +95,7 @@ def create_user_container(user_id: str, plan_type: str) -> Dict:
     warmer_port = find_available_port('user', 20000, 30000)
     campaign_port = find_available_port('user', 30000, 40000)
     
-    container_name = f"cuwhapp-user-{user_id[:8]}-{app_port}"
+    container_name = f"cuwhapp-user-{user_id[:20]}-{app_port}"
     
     # Create container config - ports must match inside and outside
     config = {
