@@ -139,7 +139,7 @@ def create_user_container(user_id: str, plan_type: str, args: Dict) -> Dict:
         warmer_port = find_available_port(ssh, 20000, 30000)   # Warmer: 20k-30k
         campaign_port = find_available_port(ssh, 30000, 40000) # Campaign: 30k-40k
         
-        container_name = f"cuwhapp-user-{user_id[:8]}-{app_port}"
+        container_name = f"cuwhapp-user-{user_id[:20]}-{app_port}"
         
         # Environment variables
         env_vars = args.get('environment', {})
