@@ -66,10 +66,25 @@ def docker_request(vm_type: str, endpoint: str, method='GET', json_data=None):
 
 def find_available_port(vm_type: str, start_port: int, end_port: int) -> int:
     """Find an available port by checking running containers"""
-    containers = docker_request(vm_type, '/containers/json')
+    containers = docker_request(vm_type, '/containers/json?all=true')
     
     used_ports = set()
+    
+    # Check container names for ports (since we include port in the name)
     for container in containers:
+        names = container.get('Names', [])
+        for name in names:
+            if 'cuwhapp-user-' in name:
+                # Extract port from container name (e.g., cuwhapp-user-xxx-40000)
+                parts = name.split('-')
+                if len(parts) > 0 and parts[-1].isdigit():
+                    port = int(parts[-1])
+                    # Add this port and neighboring ports (for warmer/campaign)
+                    used_ports.add(port)
+                    used_ports.add(port - 20000)  # warmer port
+                    used_ports.add(port - 10000)  # campaign port
+        
+        # Also check actual port bindings
         for port_info in container.get('Ports', []):
             if 'PublicPort' in port_info:
                 used_ports.add(port_info['PublicPort'])
