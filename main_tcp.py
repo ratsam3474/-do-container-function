@@ -99,7 +99,7 @@ def create_user_container(user_id: str, plan_type: str) -> Dict:
     
     # Create container config - ports must match inside and outside
     config = {
-        "Image": "cuwhapp/multi-service:latest",
+        "Image": "cuwhapp-multi-service:latest",
         "Hostname": container_name,
         "Env": [
             f"USER_ID={user_id}",
